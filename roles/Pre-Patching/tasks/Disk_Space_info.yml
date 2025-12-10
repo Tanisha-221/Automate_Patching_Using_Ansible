@@ -1,0 +1,65 @@
+- name: Gather disk space info 
+  block:
+    
+      - name: Disk partition info 
+        debug:
+            msg: "{{ ansible_mounts }}"
+
+      - name: Store disk partition info in the file 
+        copy:
+          content: |
+                 Disk_Partition_info: {{ ansible_mounts | to_nice_yaml }}
+          dest: "{{ Pre_Patching }}/Pre_Patching/disk_partition_info.txt"
+
+      - name: Confirm the disk partition info 
+        debug:
+            msg: " Disk Partition info stored in : {{ Pre_Patching }}/Pre_Patching/disk_partition_info.txt"
+
+  rescue:
+       - name: Handle failure in disk partition info
+         debug:
+            msg: "Unable to gather disk Partition information."
+
+- name: Gather disk info
+  block:
+     
+      - name: Disk info
+        shell: df -h >> {{ Pre_Patching }}/Pre_Patching/disk_info.txt"
+
+      - name: Confirm the disk info 
+        debug: 
+            msg: "Disk info is stored in {{ Pre_Patching }}/Pre_Patching/disk_info.txt"
+
+  rescue:
+     
+       - name: Handle failure in disk info 
+         debug: 
+            msg: "Unable to gather disk info and couldn't store the info in {{ Pre_Patching }}/Pre_Patching/disk_info.txt"
+
+- name: Gather memory info 
+  block:
+        - name: Memory information
+          debug: 
+             msg: |
+                 Total Memory: {{ ansible_memtotal_mb }} MB
+                 Free Memory: {{ ansible_memfree_mb }} MB
+                 Swap Total: {{ ansible_swaptotal_mb }} MB 
+                 Swap Free: {{ ansible_swapfree_mb }} MB
+
+        - name: Store memory information in the file 
+          copy: 
+              content: |
+                  Total Memory: {{ ansible_memtotal_mb }} MB
+                  Free Memory: {{ ansible_memfree_mb }} MB
+                  Swap Total: {{ ansible_swaptotal_mb }} MB
+                  Swap Free: {{ ansible_swapfree_mb }} MB
+              dest: "{{ Pre_Patching }}/Pre_Patching/memory_info.txt"
+
+        - name: Confirm the memory info
+          debug:
+              msg: "Memory info stored in {{ Pre_Patching }}/Pre_Patching/memory_info.txt" 
+
+  rescue:
+        - name: Handle failure in memory info gathering 
+          debug:
+              msg: "Unable to gather memory information."
