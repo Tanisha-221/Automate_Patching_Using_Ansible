@@ -1,0 +1,17 @@
+- name: Gather evidence before patching 
+  block:
+     - name: Create the zip of the folder 
+       community.general.archive:
+          path: "{{ Pre_Patching }}/Pre_Patching" 
+          dest: "{{ Pre_Patching }}/Pre_Patching{{ timestamp }}.zip"
+          format: zip
+
+     - name: Confirm the zip creation 
+       debug:
+          msg: "Evidence zip created at {{ Pre_Patching }}/Pre_Patching{{ timestamp }}.zip."
+
+  rescue:
+      
+       - name: Handle failure in gathering evidence 
+         debug:
+             msg: "Unable to zip the evidence folder."

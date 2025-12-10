@@ -1,0 +1,26 @@
+- name: Gather OS realease information
+  block:
+    
+       - name: OS Release info
+         debug:
+            msg: |
+                 OS realease information: 
+                  {{ ansible_distribution }} {{ ansible_distribution_version }} {{ ansible_os_family }} {{ ansible_distribution_release }}
+
+       - name: Store OS release information in the file 
+         copy:
+            content: |
+                 OS family: {{ ansible_os_family }}
+                 OS family distributer: {{ ansible_distribution }}
+                 OS Distributer version: {{ ansible_distribution_version }}
+                 OS Distributer release: {{ ansible_distribution_release }}
+            dest: "{{ Pre_Patching }}/Pre_Patching/Os_Release_info.txt"
+
+       - name: Confirm the OS  release info 
+         debug: 
+             msg: "OS realease information stored in {{ Pre_Patching }}/Pre_Patching/Os_Release_info.txt"
+
+  rescue: 
+         - name: Handle failure in OS realease information
+           debug:
+              msg: "Unable to gather OS release information."
