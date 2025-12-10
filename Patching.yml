@@ -2,3 +2,7 @@
   hosts: localhost
   gather_facts: yes
   become: no
+  roles:
+    - Pre-Patching
+    - Patching
+    - Post-Patching
