@@ -1,8 +1,15 @@
+- name: Run Pre-Patching tasks
+  tasks: 
+       - include_tasks: Create_temp_dir.yml
+        
+       - include_tasks: dns_info.yml
+       
+       - include_tasks: Os_Release_Info.yml
 
-- include_tasks: Create_temp_dir.yml
+       - include_tasks: Disk_Space_Info.yml
 
-- include_tasks: Verify_resources.yml
+       - include_tasks: uptime_info.yml
 
-- include_tasks: Gather_Active_Services.yml
+       - include_tasks: Gather_Active_Services.yml
 
-- include_tasks: Gather_Evidence.yml
+       - include_tasks: Gather_Evidence.yml

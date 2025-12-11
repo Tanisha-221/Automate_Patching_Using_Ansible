@@ -1,5 +1,2 @@
-- include_tasks: Stop_Services.yml
-- include_tasks: RedHat_Patch_Inastallation.yml
-- include_tasks: Debian_Patch_Installation.yml
-- include_tasks: Patch_Confirmation.yml
-- include_tasks: Restart_Services.yml
+---
+# tasks file for Patching
