@@ -5,8 +5,13 @@
            update_cache: yes
            cache_valid_time: 3600
            upgrade: dist 
-           upgradde: security
         when: ansible_facts.os_family == "Debian"
+
+      - name: Patching security for the bedian os 
+        apt:
+           name: "*"
+           state: latest
+           security: true
 
       - name: Debug skipped tasks
         debug: 
