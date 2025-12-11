@@ -1,0 +1,14 @@
+- name: Generate report for the file 
+  block:
+     - name: Generate the report of the difference between the file 
+       copy:
+          content: |
+                The services that are not running after the patch:
+                {{ diff_output.stdout }}
+          dest: "{{ Patching_stage }}/Report.txt"
+          when: diff_output is defined and diff_output.stdout is not empty
+
+  rescue: 
+      - name: Handle failure for report generation
+        debug: 
+           msg: Not able to generate the report 

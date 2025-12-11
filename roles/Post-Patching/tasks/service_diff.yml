@@ -1,0 +1,29 @@
+ - name: Check for the service diff 
+   vars:
+      Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
+      stage_dir2: "Post_Patching"
+      Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
+      stage_dir: "Pre_Patching"
+
+   block:
+     - name: Get the pre-patch Active services
+       shell: 
+         cat "{{ Pre_Patching }}/{{ stage_dir }}/running_services.txt"
+       register: pre_patch_running_services
+
+     - name: Get the post-patch Active services
+       shell:
+         cat "{{ Post_Patching }}/{{ stage_dir2 }}/running_services.txt"
+       register: post_patch_running_services
+
+     - name: Compare pre-patch and post-patch services using diff
+       shell: |
+            diff <(echo "{{ pre_patch_running_services.stdout }}") <(echo "{{ post_patch_running_services.stdout }}")
+       register: diff_output
+       failed_when: false
+       changed_when: false
+
+   rescue:
+        - name: Handle failure for Service diff
+          debug:
+             msg: Unable to find the diff between the status of the services 

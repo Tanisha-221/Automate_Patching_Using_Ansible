@@ -22,7 +22,8 @@
 
       - name: Reboot the server
         ansible.builtin.reboot:
-           rebbot_timeout: 3600
+           reboot_timeout: 3600
+        ignore_errors: true
 
       - name: Message for the reboot 
         debug:
