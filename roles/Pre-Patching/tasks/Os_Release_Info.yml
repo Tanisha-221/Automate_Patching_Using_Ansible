@@ -14,11 +14,11 @@
                  OS family distributer: {{ ansible_distribution }}
                  OS Distributer version: {{ ansible_distribution_version }}
                  OS Distributer release: {{ ansible_distribution_release }}
-            dest: "{{ Pre_Patching }}/Pre_Patching/Os_Release_info.txt"
+            dest: "{{ Pre_Patching }}/{{stage_dir}}/Os_Release_info.txt"
 
        - name: Confirm the OS  release info 
          debug: 
-             msg: "OS realease information stored in {{ Pre_Patching }}/Pre_Patching/Os_Release_info.txt"
+             msg: "OS realease information stored in {{ Pre_Patching }}/{{stage_dir}}/Os_Release_info.txt"
 
   rescue: 
          - name: Handle failure in OS realease information

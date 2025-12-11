@@ -7,11 +7,11 @@
      - name: Store the hostname in the file 
        copy:
           content: " The hostname of the system: {{ ansible_hostname }}"
-          dest: "{{ Pre_Patching }}/Pre_Patching/hostname.txt"
+          dest: "{{ Pre_Patching }}/{{stage_dir}}/hostname.txt"
 
      - name: Confirm the hostname
        debug:
-            msg: "Hostname stored in {{ Pre_Patching }}/Pre_Patching/hostname.txt"
+            msg: "Hostname stored in {{ Pre_Patching }}/{{stage_dir}}/hostname.txt"
 
   rescue:
        
@@ -29,11 +29,11 @@
       - name: Dtore DNS information in the file
         copy:
           content: "DNS Servers: {{ ansible_dns.nameservers }}"
-          dest: "{{ Pre_Patching }}/Pre_Patching/dns_info.txt"
+          dest: "{{ Pre_Patching }}/{{stage_dir}}/dns_info.txt"
 
       - name: Confirm the DNS server
         debug:
-            msg: "DNS Server info stored in {{ Pre_Patching }}/Pre_Patching/dns_info.txt"
+            msg: "DNS Server info stored in {{ Pre_Patching }}/{{stage_dir}}/dns_info.txt"
         
   rescue:
       - name: Handle failure in DNS information gathering 

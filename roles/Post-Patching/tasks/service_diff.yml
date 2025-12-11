@@ -1,0 +1,11 @@
+---
+# - name: Check for the service diff 
+#   block:
+#     - name: Get the pre-patch Active services
+#       shell: 
+#         cat {{ Pre_Patching }}/Pre_Patching/running_services.txt
+#       register: pre_patch_running_services
+
+#     - name: Get the post-patch Active services
+#       shell:
+#         cat {{}}

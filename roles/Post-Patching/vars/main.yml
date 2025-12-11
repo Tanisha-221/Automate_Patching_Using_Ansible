@@ -1,2 +1,4 @@
 ---
 # vars file for Post-Patching
+Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
+stage_dir1: "Post_Patching"
