@@ -1,2 +1,9 @@
----
-# vars file for Patching
+Patching_dir: "/home/tanisha/Ansible_Patching_Playbook"
+timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+stage_dir2: "Patching"
+Patch_Confirmation: "Patch_Confirmation"
+items: 
+  - apache2
+  - nginx
+  - httpd
+  - mysql

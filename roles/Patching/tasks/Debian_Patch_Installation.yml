@@ -1,0 +1,18 @@
+- name: Debian Patch installtion 
+  block: 
+      - name: Patching Debian based systems 
+        apt:
+           update_cache: yes
+           cache_valid_time: 3600
+           upgrade: dist 
+           upgradde: security
+        when: ansible_facts.os_family == "Debian"
+
+      - name: Debug skipped tasks
+        debug: 
+              var: ansible_skip_tags
+
+  rescue:
+      - name: Handle failure in Debian patch installation
+        debug:
+             msg: "Debian patch installation failed."

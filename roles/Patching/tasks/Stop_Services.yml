@@ -1,0 +1,67 @@
+- name: Create a folder for storing Patching report 
+  file:
+      path: "{{ Patching_dir }}/{{ stage_dir2 }}"
+      state: directory
+      mode: '0755'
+
+  block:
+      - name: Gather service facts
+        ansible.builtin.service_facts:
+
+      - name: Check if the services are installed
+        debug:
+            msg: "{{ item }} is installed on the system."
+        when: "'{{ item }}' in ansible_facts.services"
+        loop: "{{ items }}"
+      
+      - name: Check if the services are not installed
+        debug:
+            msg: "{{ item }} is not installed on the system."
+        when: "'{{ item }}' not in ansible_facts.services"
+        loop: "{{ items }}"
+  rescue:
+    - name: Handle failure for listing the installed services
+      debug:
+          msg: "Unable to gather the installed services information."
+
+- name: Check the ststus of the services
+  block:
+      - name: Check the status of the services 
+        ansible_facts.services:
+      - name: Display the status of the services
+        debug:
+            msg: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}"
+        loop: "{{ items }}"
+        when: "'{{ item }}' in ansible_facts.services"
+      - name: Store the status in a file 
+        copy:
+            content: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}\n"
+            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/service_status.txt"
+        loop: "{{ items }}"
+        when: "'{{ item }}' in ansible_facts.services"
+
+  rescue:
+      - name: Handle Failure 
+        debug:
+            msg: "Unable to gather the status of the services."
+
+- name: Stop the services 
+  block:
+      - name: Stop the services
+        systemd:
+          name: "{{ item }}"
+          state: stopped
+        loop: "{{ items }}"
+
+      - name: Confirm the services are stopped
+        debug: 
+            msg: "The services have been stopped successfully."
+      - name: Store the stopped services info in the file
+        copy: 
+            content: "The following services have been stopped successfully : {{ items }}"
+            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/stopped_services.txt"
+
+  rescue: 
+      - name: Handle failure in stopping the services
+        debug:  
+             msg: "Unable to stop the services {{ items }}."
