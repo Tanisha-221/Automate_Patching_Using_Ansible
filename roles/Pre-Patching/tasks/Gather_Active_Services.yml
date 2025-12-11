@@ -1,13 +1,11 @@
 - name: Gather running services
   block:
        - name: Running services
-         shell: systemctl list-units --type=service --state=running >> {{ Pre_Patching }}/Pre_Patching/running_services.txt
+         shell: systemctl list-units --type=service --state=running >> {{ Pre_Patching }}/{{ stage_dir }}/running_services.txt
 
        - name: Confirm the running services info 
          debug:
-             msg: "Running services stored in  {{ Pre_Patching }}/Pre_Patching/running_services.txt."
-
-- name: Handle failure in gathering running services 
+             msg: "Running services stored in  {{ Pre_Patching }}/{{ stage_dir }}/running_services.txt."
   rescue:
         
         - name: Handle failure in gathering running services 

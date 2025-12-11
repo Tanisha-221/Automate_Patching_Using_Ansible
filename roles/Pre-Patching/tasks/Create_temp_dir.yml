@@ -3,16 +3,16 @@
 
      - name: Create a temporary directory
        file: 
-          path: "{{ Pre_Patching }}/Pre_Patching"
+          path: "{{ Pre_Patching }}/{{ stage_dir }}"
           state: directory
           mode: '0755'
 
      - name: Display the temporary directory path 
        debug:
-          msg: "Temporary directory created at {{ Pre_Patching }}/Pre_Patching"
+          msg: "Temporary directory created at {{ Pre_Patching }}/{{ stage_dir }}"
 
   rescue:
 
       - name: Handle failure in Pre-Patching tasks 
         debug: 
-            msg: "An error occured- {{ Pre_Patching }}/Pre_Patching directory creation failured."
+            msg: "An error occured- {{ Pre_Patching }}/{{ stage_dir }} directory creation failured."
