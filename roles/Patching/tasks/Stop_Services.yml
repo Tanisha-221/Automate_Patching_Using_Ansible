@@ -1,8 +1,17 @@
 - name: Create a folder for storing Patching report 
-  file:
-      path: "{{ Patching_dir }}/{{ stage_dir2 }}"
-      state: directory
-      mode: '0755'
+  block: 
+     - name: Craete a folder for storing Patching report 
+       file:
+          path: "{{ Patching_dir }}/{{ stage_dir1 }}"
+          state: directory
+          mode: '0755'
+
+  rescue:
+       - name: Handle failure got creating folder
+         debug:
+            msg: Unable to create folder 
+
+- name: Services installed
 
   block:
       - name: Gather service facts
@@ -26,8 +35,8 @@
 
 - name: Check the ststus of the services
   block:
-      - name: Check the status of the services 
-        ansible_facts.services:
+      # - name: Check the status of the services 
+      #   ansible_facts.service:
       - name: Display the status of the services
         debug:
             msg: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}"
@@ -36,7 +45,7 @@
       - name: Store the status in a file 
         copy:
             content: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}\n"
-            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/service_status.txt"
+            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/service_status.txt"
         loop: "{{ items }}"
         when: "'{{ item }}' in ansible_facts.services"
 
@@ -59,7 +68,7 @@
       - name: Store the stopped services info in the file
         copy: 
             content: "The following services have been stopped successfully : {{ items }}"
-            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/stopped_services.txt"
+            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/stopped_services.txt"
 
   rescue: 
       - name: Handle failure in stopping the services

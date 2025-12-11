@@ -11,3 +11,19 @@
       #   copy: 
       #     content: "{{ service_status.stdout | default('No stdout captured or applicable') }}"  
       #     dest: "{{ Patching_dir }}/{{ stage_dir2 }}/restart_services.txt"
+
+  rescue:
+      - name: Handle failure in stopping the services 
+        debug:
+            msg: Unable to stopped the services {{ items }}
+
+- name: Reboot the server 
+  block:
+
+      - name: Reboot the server
+        ansible.builtin.reboot:
+           rebbot_timeout: 3600
+
+      - name: Message for the reboot 
+        debug:
+           msg: Wait your server is rebooting
