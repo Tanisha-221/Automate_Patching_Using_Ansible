@@ -1,0 +1,13 @@
+- name: Patch confirmation and store results
+  block:
+      - name: Store RedHat patch confirmation
+        copy: 
+            content: "RedHat patch installation completed successfully on {{ ansible_hostname }} at {{ ansible_date_time.iso8601 }}"
+            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/{{ Patch_Confirmation }}/RedHat_patch_confirmation_{{ timestamp }}.txt"
+        when: ansible_facts.os_family == "RedHat"
+
+      - name: Store Debian Patch confirmation
+        copy: 
+            content: "Debian patch installation completed successfully on {{ ansible_hostname }} at {{ ansible_date_time.iso8601 }}"
+            dest: "{{ Patching_dir }}/{{ stage_dir2 }}/{{ Patch_Confirmation }}/Debian_patch_confirmation_{{ timestamp }}.txt"
+        when: ansible_facts.os_family == "Debian"
