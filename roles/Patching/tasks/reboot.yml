@@ -1,0 +1,23 @@
+- name: Prompt user to confirm if they want to reboot the system
+  pause:
+      prompt: "Do you want to reboot the system? (yes/no)"
+  register: user_confirmation
+
+- name: Reboot the system
+  block:
+
+      - name: Reboot the server
+        ansible.builtin.reboot:
+           reboot_timeout: 3600
+        ignore_errors: true
+        when: user_confirmation.user_input == 'yes'
+
+      - name: Message for the reboot 
+        debug:
+           msg: Wait your server is rebooting
+
+  rescue: 
+     
+      - name: Handle failure in reboot
+        debug: 
+           msg: An error occured while rebooting the system 
