@@ -5,8 +5,7 @@
           content: |
                 The services that are not running after the patch:
                 {{ diff_output.stdout }}
-          dest: "{{ Patching_stage }}/Report.txt"
-          when: diff_output is defined and diff_output.stdout is not empty
+          dest: "{{ Patching_stage | default('No differences found') }}/Report.txt"
 
   rescue: 
       - name: Handle failure for report generation

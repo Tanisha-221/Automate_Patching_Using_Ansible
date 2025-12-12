@@ -1,9 +1,7 @@
  - name: Check for the service diff 
    vars:
-      Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
-      stage_dir2: "Post_Patching"
-      Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
-      stage_dir: "Pre_Patching"
+      stage_dir: "{{ stage_dir2 }}"
+      Pre_Patching: "{{ Patching_stage }}"
 
    block:
      - name: Get the pre-patch Active services
@@ -13,7 +11,7 @@
 
      - name: Get the post-patch Active services
        shell:
-         cat "{{ Post_Patching }}/{{ stage_dir2 }}/running_services.txt"
+         cat "{{ Pre_Patching }}/{{ stage_dir }}/running_services.txt"
        register: post_patch_running_services
 
      - name: Compare pre-patch and post-patch services using diff

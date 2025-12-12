@@ -16,15 +16,3 @@
       - name: Handle failure in stopping the services 
         debug:
             msg: Unable to stopped the services {{ items }}
-
-- name: Reboot the server 
-  block:
-
-      - name: Reboot the server
-        ansible.builtin.reboot:
-           reboot_timeout: 3600
-        ignore_errors: true
-
-      - name: Message for the reboot 
-        debug:
-           msg: Wait your server is rebooting
