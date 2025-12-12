@@ -1,4 +1,2 @@
-Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
-timestamp: "{{ lookup('pipe', 'date -d \"+5 minutes\" +\"%Y%m%d %r\"') }}"
-
-stage_dir: "Pre_Patching"
+---
+# vars file for Pre-Patching
