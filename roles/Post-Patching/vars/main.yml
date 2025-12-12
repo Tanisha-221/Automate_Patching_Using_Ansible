@@ -8,3 +8,4 @@ items:
    - mysql
 Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
 stage_dir: "Pre_Patching"
+notification: false
