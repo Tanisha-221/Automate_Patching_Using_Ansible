@@ -3,7 +3,23 @@
 
      - name: Mail notification 
        community.general.mail:
-            subject: System {{ ansible_hostname }} has been successfully provisioned.
+            host: 127.0.0.1
+            port: 2025
+            subject: Ansible-report
+            body: Hello, this is an e-mail. I hope you like it ;-)
+            from: jane@example.net (Jane Jolie)
+            to:
+                - John Doe <j.d@example.org>
+                - Suzie Something <sue@example.com>
+            cc: Charlie Root <root@localhost>
+            attach:
+                - /etc/group
+                - /tmp/avatar2.png
+            headers:
+                   - Reply-To=john@example.com
+                   - X-Special="Something or other"
+            charset: us-ascii
+
             delegate_to: localhost
        when: notifiaction
        

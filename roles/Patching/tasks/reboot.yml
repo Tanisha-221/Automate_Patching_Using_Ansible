@@ -3,7 +3,7 @@
 
       - name: Reboot the server
         ansible.builtin.reboot:
-           reboot_timeout: 360
+           reboot_timeout: "{{ reboot_timeout }}"
         ignore_errors: true
         when: reboot
 

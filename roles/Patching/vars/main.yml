@@ -7,3 +7,4 @@ items:
   - httpd
   - mysql
 reboot: false
+reboot_timeout: 360

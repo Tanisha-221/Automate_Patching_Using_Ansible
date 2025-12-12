@@ -1,5 +1,5 @@
 Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
-timestamp: "{{ lookup('pipe', 'date -d \"+5 minutes\" +\"%Y%m%d %r\"') }}"
+timestamp: "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}"
 stage_dir2: "Post_Patching"
 items:
    - apache2 
