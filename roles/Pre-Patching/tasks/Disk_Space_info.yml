@@ -20,22 +20,21 @@
          debug:
             msg: "Unable to gather disk Partition information."
 
-# - name: Gather disk info
-#   block:
+- name: Gather disk info
+  block:
      
-#       - name: Disk info
-#         shell: df -h > {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
-#         ignore_errors: true
+       - name: Disk info
+         shell: df -h >> {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt
 
-#       - name: Confirm the disk info 
-#         debug: 
-#             msg: "Disk info is stored in {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
+       - name: Confirm the disk info 
+         debug: 
+             msg: "Disk info is stored in {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
 
-#   rescue:
+  rescue:
      
-#        - name: Handle failure in disk info 
-#          debug: 
-#             msg: "Unable to gather disk info and couldn't store the info in {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
+        - name: Handle failure in disk info 
+          debug: 
+             msg: "Unable to gather disk info and couldn't store the info in {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
 
 - name: Gather memory info 
   block:

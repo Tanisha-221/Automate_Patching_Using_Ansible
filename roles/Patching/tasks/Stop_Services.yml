@@ -1,6 +1,6 @@
 - name: Create a folder for storing Patching report 
   block: 
-     - name: Craete a folder for storing Patching report 
+     - name: Create a folder for storing Patching report 
        file:
           path: "{{ Patching_dir }}/{{ stage_dir1 }}"
           state: directory
@@ -35,8 +35,6 @@
 
 - name: Check the ststus of the services
   block:
-      # - name: Check the status of the services 
-      #   ansible_facts.service:
       - name: Display the status of the services
         debug:
             msg: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}"

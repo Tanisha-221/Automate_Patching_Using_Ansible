@@ -7,15 +7,13 @@
            upgrade: dist 
         when: ansible_facts.os_family == "Debian"
 
-      - name: Patching security for the bedian os 
+      - name: Patching security for the debian
         apt:
            name: "*"
            state: latest
-           security: true
-
-      - name: Debug skipped tasks
-        debug: 
-              var: ansible_skip_tags
+           
+      - name: Ubuntu - Install the security updates
+        shell: apt-get update && apt-get upgrade -o Dir::Etc::SourceList=/etc/apt/security.sources.list
 
   rescue:
       - name: Handle failure in Debian patch installation

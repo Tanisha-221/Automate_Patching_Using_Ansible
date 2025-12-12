@@ -85,7 +85,7 @@ pip install ansible
 2. Ensure SSH access
 3. Ensure Sudo Privileges
 ### How to Run 
-Command to ru the playbbok
+Command to run the playbbok
 ```
 ansible-playbook Patching.yml
 ```
@@ -103,7 +103,7 @@ You can store variable
 | Pre_Patching       | String  | "/home/tanisha/Ansible_Patching_Playbook"                        | Pre-Patching, Post-Patching | Path to the Ansible patching playbook for pre-patching tasks. |
 | Patching_dir       | String  | "/home/tanisha/Ansible_Patching_Playbook"                        | Patching           | Path to the Ansible patching playbook for main patching tasks. |
 | Patching_stage     | String  | "/home/tanisha/Ansible_Patching_Playbook"                        | Post-Patching      | Path to the Ansible patching playbook for post-patching tasks. |
-| timestamp          | String  | "{{ lookup('pipe', 'date -d \"+5 minutes\" +\"%Y%m%d %r\"') }}" | All roles          | Timestamp generated dynamically for logging or tracking patch execution. |
+| timestamp          | String  | "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}" | All roles          | Timestamp generated dynamically for logging or tracking patch execution. |
 | stage_dir          | String  | "Pre_Patching"                                                   | Pre-Patching, Post-Patching | Directory name for staging files during pre-patching or post-patching. |
 | stage_dir1         | String  | "Patching"                                                       | Patching           | Directory name for staging files during the main patching process. |
 | stage_dir2         | String  | "Post_Patching"                                                  | Post-Patching      | Directory name for staging files during post-patching tasks. |

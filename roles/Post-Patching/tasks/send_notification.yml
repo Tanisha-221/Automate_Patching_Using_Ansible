@@ -1,17 +1,12 @@
 - name: Mail notifiaction
   block:
 
-     - name: Prompt user to confirm if they want to send the email
-       pause:
-          prompt: "Do you want to send the mail notification? (yes/no)"
-       register: user_confirmation
-
      - name: Mail notification 
        community.general.mail:
             subject: System {{ ansible_hostname }} has been successfully provisioned.
             delegate_to: localhost
-       when: user_confirmation.user_input == 'yes'
-
+       when: notifiaction
+       
   rescue:
       - name: Handle failure for notification
         debug:

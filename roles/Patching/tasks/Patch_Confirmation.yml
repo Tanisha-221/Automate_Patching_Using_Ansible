@@ -1,10 +1,19 @@
 - name: Patch confirmation and store results
   block:
       - name: Store RedHat patch confirmation
-        copy: 
-            content: "RedHat patch installation completed successfully on {{ ansible_hostname }} at {{ ansible_date_time.iso8601 }}"
-            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_RedHat_patch_confirmation_{{ timestamp }}.txt"
+        yum:
+           list=installed
+        register: yum_packages
         when: ansible_facts.os_family == "RedHat"
+
+      - name: Show the installed packages 
+        debug:
+            var: yum_packages 
+       
+      - name: Store the installed packages 
+        copy: 
+           content: "{{ yum_packages.results | join('\n') }}"
+           dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_RedHat_patch_confirmation_{{ timestamp }}.txt"
 
       - name: Gather package facts AFTER Patching 
         shell:
