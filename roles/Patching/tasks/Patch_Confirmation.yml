@@ -1,0 +1,24 @@
+- name: Patch confirmation and store results
+  block:
+      - name: Store RedHat patch confirmation
+        copy: 
+            content: "RedHat patch installation completed successfully on {{ ansible_hostname }} at {{ ansible_date_time.iso8601 }}"
+            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_RedHat_patch_confirmation_{{ timestamp }}.txt"
+        when: ansible_facts.os_family == "RedHat"
+
+      - name: Gather package facts AFTER Patching 
+        shell:
+           cmd: apt list --installed
+        register: store_update
+        when: ansible_facts.os_family == "Debian"
+
+      - name: Display the installed packages 
+        copy:
+          content: Updated packages are :"{{ store_update.stdout }}"
+          dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_Debian_patch_confirmation_{{ timestamp }}.txt"
+
+  rescue:
+      - name: Handle the failure 
+        debug:
+           msg: "Unable to list an store the updated packages"
+      

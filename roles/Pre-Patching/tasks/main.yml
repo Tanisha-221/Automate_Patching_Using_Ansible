@@ -1,2 +1,7 @@
----
-# tasks file for Pre-Patching
+- include_tasks: Create_temp_dir.yml
+
+- include_tasks: Verify_resources.yml
+
+- include_tasks: Gather_Active_Services.yml
+
+- include_tasks: Gather_Evidence.yml
