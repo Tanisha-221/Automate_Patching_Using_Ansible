@@ -1,10 +1,2 @@
-Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
-timestamp: "{{ lookup('pipe', 'date -d \"+5 minutes\" +\"%Y%m%d %r\"') }}"
-stage_dir2: "Post_Patching"
-items:
-   - apache2 
-   - nginx
-   - httpd
-   - mysql
-Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
-stage_dir: "Pre_Patching"
+---
+# vars file for Post-Patching
