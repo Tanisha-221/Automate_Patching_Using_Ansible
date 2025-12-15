@@ -8,4 +8,6 @@
 
 - include_tasks: send_notification.yml
 
+- include_tasks: Zip_Folder.yml
+
 - include_tasks: cleanup.yml

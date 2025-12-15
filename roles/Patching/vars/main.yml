@@ -4,7 +4,6 @@ stage_dir1: "Patching"
 items: 
   - apache2
   - nginx
-  - httpd
   - mysql
 reboot: false
 reboot_timeout: 360

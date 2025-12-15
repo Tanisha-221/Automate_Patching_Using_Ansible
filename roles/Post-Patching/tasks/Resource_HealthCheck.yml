@@ -15,5 +15,5 @@
         Pre_Patching: "{{ Patching_stage }}"
   rescue:
     - name: Resource Health Check Failure 
-      debug:
+      fail:
           msg: "An error occured- Resource Health Check Post Patching failed."

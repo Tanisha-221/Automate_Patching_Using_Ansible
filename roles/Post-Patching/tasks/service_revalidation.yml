@@ -9,9 +9,6 @@
         Pre_Patching: "{{ Patching_stage }}"
 
   rescue:
-    - name: Service Revalidation Failed 
-      debug:
-        msg: Service Revalidation Failed 
 
     - name: Fail Service Revalidation
       fail:

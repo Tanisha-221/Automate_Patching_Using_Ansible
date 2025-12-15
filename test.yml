@@ -1,0 +1,53 @@
+- name: Playbook comparing two files
+  hosts: localhost
+  gather_facts: yes
+  become: no
+  vars:
+    Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook/Pre_Patching/Pre_Patching"
+    Post_Patching: "/home/tanisha/Ansible_Patching_Playbook/Post_Patching/Post_Patching"
+    #stage_dir: "Pre_Patching"
+    #stage_dir2: "Post_Patching"
+  tasks:
+    - name: Get the pre-patch Active services
+      shell: 
+        cat "{{ Pre_Patching }}/running_services.txt"
+      register: pre_patch_running_services
+    
+    - name: Write pre-Patch service to a temporary file
+      copy: 
+        content: "{{ pre_patch_running_services.stdout }}"
+        dest: "{{ Pre_Patching }}/Pre_Patching_service_status.txt"
+
+    - name: Get the post-patch Active services
+      shell:
+        cat "{{ Post_Patching }}/running_services.txt"
+      register: post_patch_running_services
+
+
+    - name: Write post-patching service to a temporary file
+      copy:
+          content: "{{ post_patch_running_services.stdout }}"
+          dest: "{{ Pre_Patching }}/Post_Patching_service_status.txt"
+
+    - name: Compare pre-patch and post-patch services using diff
+      shell: |
+          diff {{ Pre_Patching }}/Pre_Patching_service_status.txt {{ Pre_Patching }}/Post_Patching_service_status.txt
+      register: diff_output
+      failed_when: diff_output.rc > 1
+      changed_when: diff_output.rc == 1
+
+    - name: Display a message if files are identical
+      ansible.builtin.debug:
+        msg: "The files {{ Pre_Patching }}/running_services.txt and {{ Post_Patching }}/running_services.txt are identical."
+      when: diff_output.rc == 0
+
+    - name: Generate the report of the difference between the file 
+      copy:
+        content: |
+              {{ diff_output.stdout }}\n{{ diff_output.stderr}}
+        dest: "{{ Pre_Patching }}/Report.txt"
+
+    # - name: Display a message if files are identical
+    #   ansible.builtin.debug:
+    #   msg: "The files {{ file_path1 }} and {{ file_path2 }} are identical."
+    #   when: differences_output.rc == 0    

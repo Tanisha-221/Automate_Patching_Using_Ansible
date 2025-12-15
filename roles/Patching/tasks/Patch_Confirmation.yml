@@ -12,8 +12,10 @@
        
       - name: Store the installed packages 
         copy: 
-           content: "{{ yum_packages.results | join('\n') }}"
+           content: "{{ yum_packages.packages | map(attribute='name') | join('\n') }}"
            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_RedHat_patch_confirmation_{{ timestamp }}.txt"
+        when: yum_packages is defined and yum_packages.packages is defined
+        ignore_errors: true
 
       - name: Gather package facts AFTER Patching 
         shell:
@@ -23,11 +25,11 @@
 
       - name: Display the installed packages 
         copy:
-          content: Updated packages are :"{{ store_update.stdout }}"
+          content: "Updated packages are :\n{{ store_update.stdout }}"
           dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_Debian_patch_confirmation_{{ timestamp }}.txt"
 
   rescue:
       - name: Handle the failure 
-        debug:
+        fail:
            msg: "Unable to list an store the updated packages"
       

@@ -11,17 +11,32 @@
 
      - name: Get the post-patch Active services
        shell:
-         cat "{{ Pre_Patching }}/{{ stage_dir }}/running_services.txt"
+         cat "{{ Pre_Patching }}/{{ stage_dir2 }}/running_services.txt"
        register: post_patch_running_services
+
+     - name: Write pre-Patch service to a temporary file
+       copy: 
+          content: "{{ pre_patch_running_services.stdout }}"
+          dest: "{{ Patching_stage }}/{{ stage_dir2}}/Pre_Patching_service_status.txt"
+
+     - name: Write post-patching service to a temporary file
+       copy:
+           content: "{{ post_patch_running_services.stdout }}"
+           dest: "{{ Patching_stage }}/{{ stage_dir2}}/Post_Patching_service_status.txt"
 
      - name: Compare pre-patch and post-patch services using diff
        shell: |
-            diff <(echo "{{ pre_patch_running_services.stdout }}") <(echo "{{ post_patch_running_services.stdout }}")
+            diff {{ Patching_stage }}/{{ stage_dir2}}/Pre_Patching_service_status.txt {{ Patching_stage }}/{{ stage_dir2}}/Post_Patching_service_status.txt
        register: diff_output
-       failed_when: false
-       changed_when: false
+       failed_when: diff_output.rc > 1
+       changed_when: diff_output.rc == 1
 
+     - name: Display a message if files are identical
+       ansible.builtin.debug:
+         msg: "The files {{ Pre_Patching }}/{{ stage_dir }}/running_services.txt and {{ Pre_Patching }}/{{ stage_dir2 }}/running_services.txt are identical."
+       when: diff_output.rc == 0
+       
    rescue:
         - name: Handle failure for Service diff
-          debug:
+          fail:
              msg: Unable to find the diff between the status of the services 

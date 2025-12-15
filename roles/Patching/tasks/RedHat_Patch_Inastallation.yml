@@ -14,5 +14,5 @@
   
   rescue: 
       - name: Handle failure in RedHat patch installation 
-        debug: 
+        fail: 
             msg: "RedHat patch installation failed."

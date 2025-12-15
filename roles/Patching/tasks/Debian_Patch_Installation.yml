@@ -1,4 +1,5 @@
 - name: Debian Patch installtion 
+  become: true
   block: 
       - name: Patching Debian based systems 
         apt:
@@ -17,5 +18,5 @@
 
   rescue:
       - name: Handle failure in Debian patch installation
-        debug:
+        fail:
              msg: "Debian patch installation failed."

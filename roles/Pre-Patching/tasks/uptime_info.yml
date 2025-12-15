@@ -16,5 +16,5 @@
 
   rescue:
         - name: Handle failure in gathering uptime information
-          debug:
+          fail:
             msg: "Unable to gather system uptime information."

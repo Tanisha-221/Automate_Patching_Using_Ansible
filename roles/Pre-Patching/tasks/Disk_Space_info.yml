@@ -17,7 +17,7 @@
 
   rescue:
        - name: Handle failure in disk partition info
-         debug:
+         fail:
             msg: "Unable to gather disk Partition information."
 
 - name: Gather disk info
@@ -33,7 +33,7 @@
   rescue:
      
         - name: Handle failure in disk info 
-          debug: 
+          fail: 
              msg: "Unable to gather disk info and couldn't store the info in {{ Pre_Patching }}/{{ stage_dir }}/disk_info.txt"
 
 - name: Gather memory info 
@@ -61,5 +61,5 @@
 
   rescue:
         - name: Handle failure in memory info gathering 
-          debug:
+          fail:
               msg: "Unable to gather memory information."

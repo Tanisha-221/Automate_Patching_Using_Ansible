@@ -9,5 +9,6 @@
 
   rescue:
       - name: Handle failure in stopping the services 
-        debug:
+        fail:
             msg: Unable to stopped the services {{ items }}
+        ignore_errors: true

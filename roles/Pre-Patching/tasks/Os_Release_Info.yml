@@ -22,5 +22,5 @@
 
   rescue: 
          - name: Handle failure in OS realease information
-           debug:
+           fail:
               msg: "Unable to gather OS release information."

@@ -13,5 +13,5 @@
   rescue:
       
        - name: Handle failure in gathering evidence 
-         debug:
+         fail:
              msg: "Unable to zip the evidence folder."

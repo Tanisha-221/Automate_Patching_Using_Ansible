@@ -10,5 +10,5 @@
   rescue: 
      
       - name: Handle failure in reboot
-        debug: 
+        fail: 
            msg: An error occured while rebooting the system 

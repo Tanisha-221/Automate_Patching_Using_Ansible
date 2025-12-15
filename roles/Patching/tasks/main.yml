@@ -4,3 +4,4 @@
 - include_tasks: Patch_Confirmation.yml
 - include_tasks: Restart_Services.yml
 - include_tasks: reboot.yml
+- include_tasks: Zip_folder.yml

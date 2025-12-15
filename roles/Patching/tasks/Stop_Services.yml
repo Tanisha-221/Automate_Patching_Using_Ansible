@@ -1,4 +1,4 @@
-- name: Create a folder for storing Patching report 
+- name: Create a folder for storing Patching report
   block: 
      - name: Create a folder for storing Patching report 
        file:
@@ -8,7 +8,7 @@
 
   rescue:
        - name: Handle failure got creating folder
-         debug:
+         fail:
             msg: Unable to create folder 
 
 - name: Services installed
@@ -30,10 +30,10 @@
         loop: "{{ items }}"
   rescue:
     - name: Handle failure for listing the installed services
-      debug:
+      fail:
           msg: "Unable to gather the installed services information."
 
-- name: Check the ststus of the services
+- name: Check the status of the services
   block:
       - name: Display the status of the services
         debug:
@@ -49,7 +49,7 @@
 
   rescue:
       - name: Handle Failure 
-        debug:
+        fail:
             msg: "Unable to gather the status of the services."
 
 - name: Stop the services 
@@ -70,5 +70,6 @@
 
   rescue: 
       - name: Handle failure in stopping the services
-        debug:  
+        fail:  
              msg: "Unable to stop the services {{ items }}."
+        ignore_errors: true

@@ -16,7 +16,7 @@
   rescue:
        
       - name: Handle failure in hostname verification
-        debug:
+        fail:
             msg: "Unable to verify the hostname of the system {{ ansible_hostname}}"
 
 
@@ -37,5 +37,5 @@
         
   rescue:
       - name: Handle failure in DNS information gathering 
-        debug:
+        fail:
             msg: "Unable to gather DNS information."
