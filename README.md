@@ -105,7 +105,7 @@ ansible-galaxy init <Role-name>
 | stage_dir          | String  | "Pre_Patching"                                                   | Pre-Patching, Post-Patching | Directory name for staging files during pre-patching or post-patching. |
 | stage_dir1         | String  | "Patching"                                                       | Patching           | Directory name for staging files during the main patching process. |
 | stage_dir2         | String  | "Post_Patching"                                                  | Post-Patching      | Directory name for staging files during post-patching tasks. |
-| items              | List    | ["apache2", "nginx", "httpd", "mysql"]                           | Patching, Post-Patching | List of services/packages to be checked or patched. |
+| services_list              | List    | ["apache2", "nginx", "httpd", "mysql"]                           | Patching, Post-Patching | List of services/packages to be checked or patched. |
 | notification       | Boolean | false                                                            | Post-Patching      | If `true`, sends email notification after patching is complete. |
 ```
 Note  
@@ -113,7 +113,7 @@ timestamp is dynamically generated in each role to track execution.
 
 stage_dir, stage_dir1, stage_dir2 are used to separate directories for pre, main, and post-patching stages.
 
-items lists services/packages targeted by patching tasks.
+services_list lists services/packages targeted by patching tasks.
 
 notification controls email alerts and is only used in the Post-Patching role.
 ````
