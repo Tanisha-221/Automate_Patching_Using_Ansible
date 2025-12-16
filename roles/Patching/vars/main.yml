@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Patching_dir: "/home/tanisha/Ansible_Patching_Playbook"
 timestamp: "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}"
 stage_dir1: "Patching"
@@ -7,3 +8,7 @@ services_list:
   - mysql
 reboot: false
 reboot_timeout: 360
+=======
+---
+# vars file for Patching
+>>>>>>> main
