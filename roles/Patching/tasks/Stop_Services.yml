@@ -21,13 +21,13 @@
         debug:
             msg: "{{ item }} is installed on the system."
         when: "'{{ item }}' in ansible_facts.services"
-        loop: "{{ items }}"
+        loop: "{{ services_list }}"
       
       - name: Check if the services are not installed
         debug:
             msg: "{{ item }} is not installed on the system."
         when: "'{{ item }}' not in ansible_facts.services"
-        loop: "{{ items }}"
+        loop: "{{ services_list }"
   rescue:
     - name: Handle failure for listing the installed services
       fail:
@@ -38,13 +38,13 @@
       - name: Display the status of the services
         debug:
             msg: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}"
-        loop: "{{ items }}"
+        loop: "{{ services_list }}"
         when: "'{{ item }}' in ansible_facts.services"
       - name: Store the status in a file 
         copy:
             content: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}\n"
             dest: "{{ Patching_dir }}/{{ stage_dir1 }}/service_status.txt"
-        loop: "{{ items }}"
+        loop: "{{ services_list }}"
         when: "'{{ item }}' in ansible_facts.services"
 
   rescue:
@@ -58,18 +58,18 @@
         systemd:
           name: "{{ item }}"
           state: stopped
-        loop: "{{ items }}"
+        loop: "{{ services_list }}"
 
       - name: Confirm the services are stopped
         debug: 
             msg: "The services have been stopped successfully."
       - name: Store the stopped services info in the file
         copy: 
-            content: "The following services have been stopped successfully : {{ items }}"
+            content: "The following services have been stopped successfully : {{ services_list }}"
             dest: "{{ Patching_dir }}/{{ stage_dir1 }}/stopped_services.txt"
 
   rescue: 
       - name: Handle failure in stopping the services
         fail:  
-             msg: "Unable to stop the services {{ items }}."
+             msg: "Unable to stop the services {{ services_list }}."
         ignore_errors: true

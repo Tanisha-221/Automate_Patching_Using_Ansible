@@ -1,7 +1,7 @@
 Patching_dir: "/home/tanisha/Ansible_Patching_Playbook"
 timestamp: "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}"
 stage_dir1: "Patching"
-items: 
+services_list: 
   - apache2
   - nginx
   - mysql

@@ -93,8 +93,7 @@ To create a role
 ``` 
 ansible-galaxy init <Role-name> 
 ```
-### Variable 
-You can store variable
+
 ### Variables Used in This Project
 # 📑 Variables Used in This Project
 
