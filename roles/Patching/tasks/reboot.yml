@@ -1,0 +1,14 @@
+- name: Reboot the system
+  block:
+
+      - name: Reboot the server
+        ansible.builtin.reboot:
+           reboot_timeout: "{{ reboot_timeout }}"
+        ignore_errors: true
+        when: reboot
+
+  rescue: 
+     
+      - name: Handle failure in reboot
+        fail: 
+           msg: An error occured while rebooting the system 

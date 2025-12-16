@@ -1,0 +1,35 @@
+- name: Patch confirmation and store results
+  block:
+      - name: Store RedHat patch confirmation
+        yum:
+           list=installed
+        register: yum_packages
+        when: ansible_facts.os_family == "RedHat"
+
+      - name: Show the installed packages 
+        debug:
+            var: yum_packages 
+       
+      - name: Store the installed packages 
+        copy: 
+           content: "{{ yum_packages.packages | map(attribute='name') | join('\n') }}"
+           dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_RedHat_patch_confirmation_{{ timestamp }}.txt"
+        when: yum_packages is defined and yum_packages.packages is defined
+        ignore_errors: true
+
+      - name: Gather package facts AFTER Patching 
+        shell:
+           cmd: apt list --installed
+        register: store_update
+        when: ansible_facts.os_family == "Debian"
+
+      - name: Display the installed packages 
+        copy:
+          content: "Updated packages are :\n{{ store_update.stdout }}"
+          dest: "{{ Patching_dir }}/{{ stage_dir1 }}/Patch_Confirmation_Debian_patch_confirmation_{{ timestamp }}.txt"
+
+  rescue:
+      - name: Handle the failure 
+        fail:
+           msg: "Unable to list an store the updated packages"
+      

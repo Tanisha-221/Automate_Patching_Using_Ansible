@@ -1,0 +1,14 @@
+- name: Restart the stopped services 
+  block: 
+      - name: Restart the stopped services 
+        service:
+          name: "{{ item }}"
+          state: started
+        loop: "{{ services_list }}"
+        register: service_status 
+
+  rescue:
+      - name: Handle failure in stopping the services 
+        fail:
+            msg: Unable to stopped the services {{ services_list }}
+        ignore_errors: true

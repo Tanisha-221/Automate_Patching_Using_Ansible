@@ -1,0 +1,20 @@
+- name: Mail notification
+  block:
+
+     - name: Mail notification 
+       community.general.mail:
+            host: "{{ host_name }}"
+            port: "{{ port }}"
+            subject: "{{ subject }}"
+            body: "{{ body }}"
+            from: "{{ from }}"
+            to: "{{ to }}"
+            cc: "{{ cc }}"
+            attach: "{{ attach }}"
+            headers: "{{ headers }}"
+       when: notification
+       
+  rescue:
+      - name: Handle failure for notification
+        fail:
+           msg: Unable to send notification 

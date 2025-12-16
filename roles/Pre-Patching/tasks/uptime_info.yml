@@ -1,0 +1,20 @@
+- name: Gather system uptime information
+  block:
+        
+        - name: Uptime Information 
+          debug:
+              msg: "System Uptime: {{ ansible_uptime_seconds }} seconds"
+
+        - name: Store uptime information in the file
+          copy:
+            content: "System Uptime: {{ ansible_uptime_seconds }} seconds"
+            dest: "{{ Pre_Patching }}/{{ stage_dir }}/uptime_info.txt"
+
+        - name: Confirm the uptime information
+          debug:
+            msg: "System uptime information stored in {{ Pre_Patching }}/{{ stage_dir }}/uptime_info.txt"
+
+  rescue:
+        - name: Handle failure in gathering uptime information
+          fail:
+            msg: "Unable to gather system uptime information."

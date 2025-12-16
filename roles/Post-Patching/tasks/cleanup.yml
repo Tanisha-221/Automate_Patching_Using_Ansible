@@ -1,0 +1,22 @@
+- name: Performing cleanup
+  block:
+    - name: Performing clean up of Pre_Patching
+      file:
+        path: "{{Pre_Patching}}/{{ stage_dir }}"
+        state: absent 
+
+    - name: Performing clean up of Patching
+      file:
+        path: "{{ Patching_dir }}/{{ stage_dir1 }}"
+        state: absent
+
+    - name: Performing clean up of POST_Patching
+      file:
+          path: "{{ Patching_stage }}/{{ stage_dir2 }}"
+          state: absent
+
+  rescue: 
+
+      - name: Handle failure for clean 
+        fail:
+           msg: An error occured in cleaning up the files 

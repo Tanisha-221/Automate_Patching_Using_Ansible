@@ -3,6 +3,7 @@
   gather_facts: yes
   become: no
   roles:
-    - Pre-Patching
-    - Patching
-    - Post-Patching
+     - Pre-Patching
+     - Patching
+     - Post-Patching
+  

@@ -1,0 +1,7 @@
+- include_tasks: dns_info.yml
+       
+- include_tasks: Os_Release_Info.yml
+
+- include_tasks: Disk_Space_info.yml
+
+- include_tasks: uptime_info.yml

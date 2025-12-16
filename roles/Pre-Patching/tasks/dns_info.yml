@@ -1,0 +1,41 @@
+- name: Verify Resources
+  block:
+     
+     - name: Hostname of the system
+       debug: 
+          msg: "Hostname: {{ ansible_hostname }}"
+     - name: Store the hostname in the file 
+       copy:
+          content: " The hostname of the system: {{ ansible_hostname }}"
+          dest: "{{ Pre_Patching }}/{{ stage_dir }}/hostname.txt"
+
+     - name: Confirm the hostname
+       debug:
+            msg: "Hostname stored in {{ Pre_Patching }}/{{ stage_dir }}/hostname.txt"
+
+  rescue:
+       
+      - name: Handle failure in hostname verification
+        fail:
+            msg: "Unable to verify the hostname of the system {{ ansible_hostname}}"
+
+
+- name: DNS info 
+  block:
+      - name: Show DNS information
+        debug:
+          msg: "DNS Servers: {{ ansible_dns.nameservers }}"
+
+      - name: Dtore DNS information in the file
+        copy:
+          content: "DNS Servers: {{ ansible_dns.nameservers }}"
+          dest: "{{ Pre_Patching }}/{{ stage_dir }}/dns_info.txt"
+
+      - name: Confirm the DNS server
+        debug:
+            msg: "DNS Server info stored in {{ Pre_Patching }}/{{ stage_dir }}/dns_info.txt"
+        
+  rescue:
+      - name: Handle failure in DNS information gathering 
+        fail:
+            msg: "Unable to gather DNS information."

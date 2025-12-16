@@ -1,0 +1,75 @@
+- name: Create a folder for storing Patching report
+  block: 
+     - name: Create a folder for storing Patching report 
+       file:
+          path: "{{ Patching_dir }}/{{ stage_dir1 }}"
+          state: directory
+          mode: '0755'
+
+  rescue:
+       - name: Handle failure got creating folder
+         fail:
+            msg: Unable to create folder 
+
+- name: Services installed
+
+  block:
+      - name: Gather service facts
+        ansible.builtin.service_facts:
+
+      - name: Check if the services are installed
+        debug:
+            msg: "{{ item }} is installed on the system."
+        when: "'{{ item }}' in ansible_facts.services"
+        loop: "{{ services_list }}"
+      
+      - name: Check if the services are not installed
+        debug:
+            msg: "{{ item }} is not installed on the system."
+        when: "'{{ item }}' not in ansible_facts.services"
+        loop: "{{ services_list }"
+  rescue:
+    - name: Handle failure for listing the installed services
+      fail:
+          msg: "Unable to gather the installed services information."
+
+- name: Check the status of the services
+  block:
+      - name: Display the status of the services
+        debug:
+            msg: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}"
+        loop: "{{ services_list }}"
+        when: "'{{ item }}' in ansible_facts.services"
+      - name: Store the status in a file 
+        copy:
+            content: "The status of the service {{ item }} is {{ ansible_facts.services[item].state }}\n"
+            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/service_status.txt"
+        loop: "{{ services_list }}"
+        when: "'{{ item }}' in ansible_facts.services"
+
+  rescue:
+      - name: Handle Failure 
+        fail:
+            msg: "Unable to gather the status of the services."
+
+- name: Stop the services 
+  block:
+      - name: Stop the services
+        systemd:
+          name: "{{ item }}"
+          state: stopped
+        loop: "{{ services_list }}"
+
+      - name: Confirm the services are stopped
+        debug: 
+            msg: "The services have been stopped successfully."
+      - name: Store the stopped services info in the file
+        copy: 
+            content: "The following services have been stopped successfully : {{ services_list }}"
+            dest: "{{ Patching_dir }}/{{ stage_dir1 }}/stopped_services.txt"
+
+  rescue: 
+      - name: Handle failure in stopping the services
+        fail:  
+             msg: "Unable to stop the services {{ services_list }}."
+        ignore_errors: true

@@ -1,0 +1,22 @@
+- name: Debian Patch installtion 
+  become: true
+  block: 
+      - name: Patching Debian based systems 
+        apt:
+           update_cache: yes
+           cache_valid_time: 3600
+           upgrade: dist 
+        when: ansible_facts.os_family == "Debian"
+
+      - name: Patching security for the debian
+        apt:
+           name: "*"
+           state: latest
+           
+      - name: Ubuntu - Install the security updates
+        shell: apt-get update && apt-get upgrade -o Dir::Etc::SourceList=/etc/apt/security.sources.list
+
+  rescue:
+      - name: Handle failure in Debian patch installation
+        fail:
+             msg: "Debian patch installation failed."

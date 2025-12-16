@@ -1,2 +1,13 @@
----
-# tasks file for Post-Patching
+- include_tasks: Resource_HealthCheck.yml
+
+- include_tasks: service_revalidation.yml
+
+- include_tasks: service_diff.yml
+
+- include_tasks: report_generation.yml
+
+- include_tasks: send_notification.yml
+
+- include_tasks: Zip_Folder.yml
+
+- include_tasks: cleanup.yml
