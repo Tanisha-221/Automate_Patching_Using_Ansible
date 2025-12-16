@@ -23,3 +23,6 @@ attach:
 headers:
      - Reply-To=john@example.com
      - X-Special="Something or other"
+
+Cleanup: true
+  

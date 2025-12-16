@@ -14,7 +14,7 @@
       file:
           path: "{{ Patching_stage }}/{{ stage_dir2 }}"
           state: absent
-
+  when: Cleanup
   rescue: 
 
       - name: Handle failure for clean 
