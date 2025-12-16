@@ -1,0 +1,15 @@
+- name: Gather evidence
+  block: 
+      - name: Create zip folder for Post-Patching 
+        include_role: 
+            name: Pre-Patching
+            tasks_from: Gather_Evidence.yml
+        vars:
+           stage_dir: "{{ stage_dir2 }}"
+           Pre_Patching: "{{ Patching_stage }}"
+
+  rescue:
+      - name: Handle failure for creating zip folder
+        ansible.builtin.fail:
+           msg: An error occured while creating the zip folder.
+        when: not file_check.stats.exits

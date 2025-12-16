@@ -1,2 +1,33 @@
+<<<<<<< HEAD
+Patching_stage: "/home/tanisha/Ansible_Patching_Playbook"
+timestamp: "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}"
+stage_dir2: "Post_Patching"
+services_list:
+   - apache2 
+   - nginx
+   - mysql
+Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
+stage_dir: "Pre_Patching"
+notification: false
+subject: " Ansible-report"
+host_name: " 127.0.0.1"
+port: "2025"
+body: "Hello, this is an e-mail. I hope you like it ;-)"
+from: "jane@example.net (Jane Jolie)"
+to: 
+    - John Doe <j.d@example.org>
+    - Suzie Something <sue@example.com>
+cc: "Charlie Root <root@localhost>"
+attach: 
+      - /etc/group
+      - /tmp/avatar2.png
+headers:
+     - Reply-To=john@example.com
+     - X-Special="Something or other"
+
+Cleanup: true
+  
+=======
 ---
 # vars file for Post-Patching
+>>>>>>> main

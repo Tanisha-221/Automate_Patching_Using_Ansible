@@ -1,2 +1,13 @@
+<<<<<<< HEAD
+Pre_Patching: "/home/tanisha/Ansible_Patching_Playbook"
+timestamp: "{{ lookup('pipe', 'date -d \"minutes\" +\"%Y%m%d %r\"') }}"
+
+stage_dir: "Pre_Patching"
+services_list: 
+  - apache2
+  - nginx
+  - mysql
+=======
 ---
 # vars file for Pre-Patching
+>>>>>>> main
