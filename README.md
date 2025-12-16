@@ -95,7 +95,6 @@ ansible-galaxy init <Role-name>
 ```
 
 ### Variables Used in This Project
-# 📑 Variables Used in This Project
 
 | Variable Name      | Type     | Default Value / Example                                           | Used In Role         | Description |
 |-------------------|---------|------------------------------------------------------------------|--------------------|-------------|
